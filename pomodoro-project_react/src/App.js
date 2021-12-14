@@ -2,16 +2,20 @@ import "./App.css";
 import Session from "./Session";
 import TaskList from "./TaskList";
 import SessionHistory from "./SessionHistory";
+import CurrentTime from "./CurrentTime";
 
 function App() {
     return (
-        <div className="main-container">
-            {/* Header */}
-            <Session />
-            {/* <TaskList /> */}
-            {/* <SessionHistory /> */}
-            {/* Footer */}
-        </div>
+        // Header
+        <main>
+            <CurrentTime />
+            <div className="main-container">
+                <Session />
+                <TaskList />
+                <SessionHistory />
+            </div>
+        </main>
+        // Footer
     );
 }
 

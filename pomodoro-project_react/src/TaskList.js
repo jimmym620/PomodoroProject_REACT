@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 
 const TaskList = () => {
-    return <h1>Task List component</h1>;
+    return (
+        <section className="TaskList main-section">
+            Task List component
+            <button>Test</button>
+            <button>Test</button>
+        </section>
+    );
 };
 
 export default TaskList;

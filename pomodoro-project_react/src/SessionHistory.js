@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 
 const SessionHistory = () => {
-    return <h1>Session history component</h1>;
+    return (
+        <section className="SessionHistory main-section">
+            Session history component{" "}
+        </section>
+    );
 };
 
 export default SessionHistory;
