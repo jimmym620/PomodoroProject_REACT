@@ -1,0 +1,6 @@
+if !paused
+    seconds -1
+
+else 
+    setSeconds(0)
+    setMinutes(0)
