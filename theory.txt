@@ -4,3 +4,11 @@ if !paused
 else 
     setSeconds(0)
     setMinutes(0)
+
+
+===============================
+
+if isEnded
+    
+    setMinutes(0)
+    setSeconds(0)

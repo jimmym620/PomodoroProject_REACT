@@ -8,10 +8,11 @@ import Countdown from "react-countdown";
 const Session = () => {
     const [countdown, setCountdown] = useState();
     const [isPaused, setIsPaused] = useState(true);
+    const [isEnded, setIsEnded] = useState(false);
 
     const [displayBreakMessage, setDisplayBreakMessage] = useState(false);
     const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(5);
+    const [seconds, setSeconds] = useState(10);
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -19,6 +20,14 @@ const Session = () => {
     useEffect(() => {
         let interval = setInterval(() => {
             clearInterval(interval);
+            if (isEnded) {
+                clearInterval(interval);
+                setMinutes(0);
+                setSeconds(0);
+                console.log("ENDED");
+                setIsPaused(true);
+                return;
+            }
             if (isPaused) {
                 clearInterval(interval);
                 console.log("PAUSED");
@@ -42,16 +51,15 @@ const Session = () => {
                 }
             }
         }, 1000);
-    }, [seconds, isPaused]);
+    }, [seconds, isPaused, isEnded]);
 
     const endSession = () => {
-        setMinutes(0);
-        setSeconds(0);
-        setIsPaused(true);
+        setIsEnded(true);
     };
 
     const startPauseSession = () => {
         setIsPaused(!isPaused);
+        setIsEnded(false);
         console.log(isPaused);
     };
 
@@ -64,9 +72,7 @@ const Session = () => {
             <div className=" session">
                 <h1>Start a session</h1>
                 <div className="message-display">
-                    {displayBreakMessage && (
-                        <div>Break time! New session starting in:</div>
-                    )}
+                    {displayBreakMessage && <h3>Break time!</h3>}
                 </div>
                 <div className="remaining-time">
                     <h1>
@@ -74,21 +80,26 @@ const Session = () => {
                     </h1>
                 </div>
 
-                <form className="time-form" onSubmit={handleSubmitMinutes}>
-                    <label htmlFor="sessionTime">Minutes per session:</label>
-                    <input
-                        type="number"
-                        max="60"
-                        min="0"
-                        onInput={(e) =>
-                            (e.target.value = e.target.value.slice(0, 2))
-                        }
-                        name="sessionTime"
-                        value={seconds}
-                        onChange={(e) => setSeconds(e.target.value)}
-                    />
-                    <button type="submit"> Submit</button>
-                </form>
+                {isPaused && (
+                    <form className="time-form" onSubmit={handleSubmitMinutes}>
+                        <label htmlFor="sessionTime">
+                            Minutes per session:
+                        </label>
+                        <input
+                            type="number"
+                            max="60"
+                            min="0"
+                            onInput={(e) =>
+                                (e.target.value = e.target.value.slice(0, 2))
+                            }
+                            name="sessionTime"
+                            value={seconds}
+                            onChange={(e) => setSeconds(e.target.value)}
+                        />
+                        <button type="submit"> Submit</button>
+                    </form>
+                )}
+
                 <div className="button-container">
                     <button
                         className="sessionButtons"
@@ -98,8 +109,6 @@ const Session = () => {
                         Start/Pause
                     </button>
                     <button className="sessionButtons">Edit time</button>
-
-                    <button className="sessionButtons">Resume</button>
                     <button className="sessionButtons" onClick={endSession}>
                         End session
                     </button>
