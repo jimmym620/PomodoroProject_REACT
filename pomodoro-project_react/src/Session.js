@@ -9,9 +9,9 @@ const Session = () => {
     const [countdown, setCountdown] = useState();
     const [isPaused, setIsPaused] = useState(true);
 
-    const [displayMessage, setDisplayMessage] = useState(false);
+    const [displayBreakMessage, setDisplayBreakMessage] = useState(false);
     const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(10);
+    const [seconds, setSeconds] = useState(5);
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -19,13 +19,17 @@ const Session = () => {
     useEffect(() => {
         let interval = setInterval(() => {
             clearInterval(interval);
-            if (!isPaused) {
-                //seconds are not 0, just decrease seconds by 1
-                setSeconds(seconds - 1);
-            }
             if (isPaused) {
                 clearInterval(interval);
+                console.log("PAUSED");
             }
+            if (!isPaused && seconds !== 0) {
+                //seconds are not 0, just decrease seconds by 1
+                setSeconds(seconds - 1);
+                setDisplayBreakMessage(false);
+                console.log(seconds + " isPaused: " + isPaused);
+            }
+
             if (seconds === 0) {
                 if (minutes !== 0) {
                     //decrease minutes by one, set seconds from 0 to 59
@@ -33,13 +37,8 @@ const Session = () => {
                     setMinutes(minutes - 1);
                 } else {
                     // both min and sec are 0, reset or start break timer
-                    clearInterval(interval);
-                    let minutes = displayMessage ? 10 : 5;
-                    let seconds = 59;
+                    setDisplayBreakMessage(true);
                     setIsPaused(true);
-                    setSeconds(seconds);
-                    setMinutes(minutes);
-                    // setDisplayMessage(!displayMessage);
                 }
             }
         }, 1000);
@@ -56,11 +55,6 @@ const Session = () => {
         console.log(isPaused);
     };
 
-    const convertToMs = (minutes) => {
-        const resultMS = minutes * 60000;
-        return resultMS;
-    };
-
     const handleSubmitMinutes = (e) => {
         e.preventDefault();
     };
@@ -70,13 +64,11 @@ const Session = () => {
             <div className=" session">
                 <h1>Start a session</h1>
                 <div className="message-display">
-                    {displayMessage && (
+                    {displayBreakMessage && (
                         <div>Break time! New session starting in:</div>
                     )}
                 </div>
                 <div className="remaining-time">
-                    {/* <h3>Remaining time</h3> */}
-                    {/* <h4>{countdown}</h4> */}
                     <h1>
                         {timerMinutes}:{timerSeconds}
                     </h1>
@@ -92,8 +84,8 @@ const Session = () => {
                             (e.target.value = e.target.value.slice(0, 2))
                         }
                         name="sessionTime"
-                        value={minutes}
-                        onChange={(e) => setMinutes(e.target.value)}
+                        value={seconds}
+                        onChange={(e) => setSeconds(e.target.value)}
                     />
                     <button type="submit"> Submit</button>
                 </form>
