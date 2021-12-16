@@ -25,6 +25,7 @@ const Session = () => {
                 setMinutes(0);
                 setSeconds(0);
                 console.log("ENDED");
+                setIsEnded(false);
                 setIsPaused(true);
                 return;
             }
@@ -59,7 +60,6 @@ const Session = () => {
 
     const startPauseSession = () => {
         setIsPaused(!isPaused);
-        setIsEnded(false);
         console.log(isPaused);
     };
 
@@ -82,9 +82,7 @@ const Session = () => {
 
                 {isPaused && (
                     <form className="time-form" onSubmit={handleSubmitMinutes}>
-                        <label htmlFor="sessionTime">
-                            Minutes per session:
-                        </label>
+                        <label htmlFor="sessionTime">Minutes:</label>
                         <input
                             type="number"
                             max="60"
@@ -106,9 +104,8 @@ const Session = () => {
                         name="startStopBTN"
                         onClick={startPauseSession}
                     >
-                        Start/Pause
+                        {isPaused ? "Start" : "Pause"}
                     </button>
-                    <button className="sessionButtons">Edit time</button>
                     <button className="sessionButtons" onClick={endSession}>
                         End session
                     </button>
