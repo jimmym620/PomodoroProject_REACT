@@ -10,9 +10,13 @@ const Session = () => {
     const [isPaused, setIsPaused] = useState(true);
     const [isEnded, setIsEnded] = useState(false);
 
-    const [displayBreakMessage, setDisplayBreakMessage] = useState(false);
+    const [displayBreakMessage, setDisplayBreakMessage] = useState({
+        show: true,
+        msg: "",
+        type: "",
+    });
     const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(10);
+    const [seconds, setSeconds] = useState(0);
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -41,13 +45,14 @@ const Session = () => {
             }
 
             if (seconds === 0) {
-                if (minutes !== 0) {
+                if (minutes !== 0 && !isPaused) {
                     //decrease minutes by one, set seconds from 0 to 59
                     setSeconds(59);
                     setMinutes(minutes - 1);
-                } else {
+                }
+                if (minutes === 0) {
                     // both min and sec are 0, reset or start break timer
-                    setDisplayBreakMessage(true);
+                    showMessage( true, "success", "Session complete!" );
                     setIsPaused(true);
                 }
             }
@@ -63,6 +68,10 @@ const Session = () => {
         console.log(isPaused);
     };
 
+    const showMessage = (show = false, type = "", msg = "") => {
+        setDisplayBreakMessage({show, type, msg})
+    };
+
     const handleSubmitMinutes = (e) => {
         e.preventDefault();
     };
@@ -72,7 +81,7 @@ const Session = () => {
             <div className=" session">
                 <h1>Start a session</h1>
                 <div className="message-display">
-                    {displayBreakMessage && <h3>Break time!</h3>}
+                    {displayBreakMessage.show && <h3>{displayBreakMessage.msg }</h3>}
                 </div>
                 <div className="remaining-time">
                     <h1>
@@ -94,7 +103,7 @@ const Session = () => {
                             value={seconds}
                             onChange={(e) => setSeconds(e.target.value)}
                         />
-                        <button type="submit"> Submit</button>
+                        {/* <button type="submit"> Submit</button> */}
                     </form>
                 )}
 
