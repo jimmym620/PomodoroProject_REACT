@@ -4,6 +4,7 @@
 import React, { Component } from "react";
 import { useState, useEffect } from "react";
 import Countdown from "react-countdown";
+import Message from "./Message";
 
 const Session = () => {
     const [countdown, setCountdown] = useState();
@@ -14,6 +15,7 @@ const Session = () => {
         show: true,
         msg: "",
         type: "",
+        displayTime: 0,
     });
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
@@ -24,6 +26,10 @@ const Session = () => {
     useEffect(() => {
         let interval = setInterval(() => {
             clearInterval(interval);
+            if (seconds < 0) {
+                setSeconds(0);
+                return;
+            }
             if (isEnded) {
                 clearInterval(interval);
                 setMinutes(0);
@@ -40,7 +46,7 @@ const Session = () => {
             if (!isPaused && seconds !== 0) {
                 //seconds are not 0, just decrease seconds by 1
                 setSeconds(seconds - 1);
-                setDisplayBreakMessage(false);
+
                 console.log(seconds + " isPaused: " + isPaused);
             }
 
@@ -52,7 +58,7 @@ const Session = () => {
                 }
                 if (minutes === 0) {
                     // both min and sec are 0, reset or start break timer
-                    showMessage( true, "success", "Session complete!" );
+                    // showMessage(true, "success", "Session complete!");
                     setIsPaused(true);
                 }
             }
@@ -64,12 +70,22 @@ const Session = () => {
     };
 
     const startPauseSession = () => {
-        setIsPaused(!isPaused);
-        console.log(isPaused);
+        if (seconds === 0) {
+            showMessage(true, "", "Please enter a value", 5);
+        } else {
+            setIsPaused(!isPaused);
+
+            console.log(isPaused);
+        }
     };
 
-    const showMessage = (show = false, type = "", msg = "") => {
-        setDisplayBreakMessage({show, type, msg})
+    const showMessage = (
+        show = false,
+        type = "",
+        msg = "",
+        displayTime = 0
+    ) => {
+        setDisplayBreakMessage({ show, type, msg, displayTime });
     };
 
     const handleSubmitMinutes = (e) => {
@@ -81,7 +97,13 @@ const Session = () => {
             <div className=" session">
                 <h1>Start a session</h1>
                 <div className="message-display">
-                    {displayBreakMessage.show && <h3>{displayBreakMessage.msg }</h3>}
+                    {displayBreakMessage.show && (
+                        <Message
+                            {...displayBreakMessage}
+                            seconds={seconds}
+                            removeMessage={showMessage}
+                        />
+                    )}
                 </div>
                 <div className="remaining-time">
                     <h1>
@@ -95,7 +117,7 @@ const Session = () => {
                         <input
                             type="number"
                             max="60"
-                            min="0"
+                            min="1"
                             onInput={(e) =>
                                 (e.target.value = e.target.value.slice(0, 2))
                             }

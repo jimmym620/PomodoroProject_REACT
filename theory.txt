@@ -7,8 +7,9 @@ else
 
 
 ===============================
+ 
+ CONDITIONS FOR ENDING A SESSION
 
-if isEnded
-    
-    setMinutes(0)
-    setSeconds(0)
+ - isEnded TRUE 
+ - minutes and seconds === 0
+ - isPaused FALSE
