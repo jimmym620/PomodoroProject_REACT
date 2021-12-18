@@ -3,13 +3,12 @@
 
 import React, { Component } from "react";
 import { useState, useEffect } from "react";
-import Countdown from "react-countdown";
 import Message from "./Message";
 
 const Session = () => {
-    const [countdown, setCountdown] = useState();
     const [isPaused, setIsPaused] = useState(true);
     const [isEnded, setIsEnded] = useState(false);
+    const [countActive, setCountActive] = useState(false);
 
     const [displayBreakMessage, setDisplayBreakMessage] = useState({
         show: true,
@@ -18,7 +17,7 @@ const Session = () => {
         displayTime: 0,
     });
     const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(5);
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -26,54 +25,58 @@ const Session = () => {
     useEffect(() => {
         let interval = setInterval(() => {
             clearInterval(interval);
-            if (seconds < 0) {
-                setSeconds(0);
-                return;
-            }
-            if (isEnded) {
-                clearInterval(interval);
-                setMinutes(0);
-                setSeconds(0);
-                console.log("ENDED");
-                setIsEnded(false);
-                setIsPaused(true);
-                return;
-            }
-            if (isPaused) {
-                clearInterval(interval);
-                console.log("PAUSED");
-            }
-            if (!isPaused && seconds !== 0) {
-                //seconds are not 0, just decrease seconds by 1
-                setSeconds(seconds - 1);
-
-                console.log(seconds + " isPaused: " + isPaused);
-            }
-
+            // if seconds are 0
             if (seconds === 0) {
+                // if minutes are not 0
                 if (minutes !== 0 && !isPaused) {
                     //decrease minutes by one, set seconds from 0 to 59
                     setSeconds(59);
                     setMinutes(minutes - 1);
                 }
-                if (minutes === 0) {
+                // if minutes are also 0
+                if (minutes === 0 && countActive) {
                     // both min and sec are 0, reset or start break timer
                     // showMessage(true, "success", "Session complete!");
+                    clearInterval(interval);
+                    showMessage(true, "", "Session complete", 3);
+                    setCountActive(false);
                     setIsPaused(true);
+                    return;
                 }
             }
+
+            // if seconds go negative
+            if (seconds < 0) {
+                setSeconds(0);
+                return;
+            }
+            // if timer is paused
+            else if (isPaused && countActive) {
+                console.log("PAUSED");
+                return;
+            }
+            // if seconds are not 0, just decrease seconds by 1
+            if (!isPaused && seconds !== 0 && countActive) {
+                setSeconds(seconds - 1);
+
+                console.log(seconds + " isPaused: " + isPaused);
+            }
         }, 1000);
-    }, [seconds, isPaused, isEnded]);
+    }, [seconds, isPaused, countActive]);
 
     const endSession = () => {
-        setIsEnded(true);
+        setMinutes(0);
+        setSeconds(0);
+        setIsPaused(true);
+        setCountActive(false);
     };
 
     const startPauseSession = () => {
-        if (seconds === 0) {
-            showMessage(true, "", "Please enter a value", 5);
+        if (seconds === 0 && minutes === 0) {
+            showMessage(true, "", "Must be at least 1 minute", 3.5);
         } else {
             setIsPaused(!isPaused);
+            setCountActive(true);
 
             console.log(isPaused);
         }
@@ -111,7 +114,7 @@ const Session = () => {
                     </h1>
                 </div>
 
-                {isPaused && (
+                {!countActive && (
                     <form className="time-form" onSubmit={handleSubmitMinutes}>
                         <label htmlFor="sessionTime">Minutes:</label>
                         <input
@@ -137,9 +140,11 @@ const Session = () => {
                     >
                         {isPaused ? "Start" : "Pause"}
                     </button>
-                    <button className="sessionButtons" onClick={endSession}>
-                        End session
-                    </button>
+                    {isPaused && countActive && (
+                        <button className="sessionButtons" onClick={endSession}>
+                            End this session
+                        </button>
+                    )}
                 </div>
             </div>
         </section>

@@ -13,3 +13,10 @@ else
  - isEnded TRUE 
  - minutes and seconds === 0
  - isPaused FALSE
+
+ ===============================
+ How to know if a session began and has isEnded
+
+ - minutes > 0, sessionActive TRUE
+ - if (sessionActive TRUE, minutes+seconds = 0), 
+    sessionActive FALSE
