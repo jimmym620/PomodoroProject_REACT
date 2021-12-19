@@ -10,6 +10,7 @@ function App() {
         <>
             <header>
                 <h1>Quick Tomato</h1>
+                <h2>A simple pomodoro timer</h2>
                 {/* navbar */}
             </header>
             <main>
