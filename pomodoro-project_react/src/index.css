@@ -1,5 +1,7 @@
 header {
     display: flex;
+    flex-direction: column;
+    color: rgb(208, 35, 35);
     align-items: center;
 
     justify-content: center;
