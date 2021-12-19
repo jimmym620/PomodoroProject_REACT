@@ -1,5 +1,6 @@
 {
   "name": "pomodoro-project_react",
+  "homepage": "https://www.quicktomato.xyz/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
