@@ -51,10 +51,10 @@ input {
     display: flex;
     text-align: center;
     flex-direction: column;
-    width: 25vw;
+    width: 30vw;
     height: 60vh;
-    background-color: grey;
-    border: 1px solid black;
+    background-color: rgb(137, 135, 242);
+    outline: 5px solid black;
 }
 
 .session {
@@ -74,6 +74,30 @@ input {
     width: 100%;
 }
 
-.button-container button {
-    height: rem;
+.TaskSection {
+    justify-content: space-between;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.task-item {
+    display: flex;
+    width: 13rem;
+
+    padding: 0 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    align-items: center;
+    border-radius: 0.25rem;
+    border: 0.1rem solid black;
+    background-color: rgb(157, 176, 240);
+}
+
+.task-item button {
+    width: 4rem;
 }

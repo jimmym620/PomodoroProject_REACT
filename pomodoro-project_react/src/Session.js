@@ -16,8 +16,8 @@ const Session = () => {
         type: "",
         displayTime: 0,
     });
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(5);
+    const [minutes, setMinutes] = useState(5);
+    const [seconds, setSeconds] = useState(0);
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -125,8 +125,8 @@ const Session = () => {
                                 (e.target.value = e.target.value.slice(0, 2))
                             }
                             name="sessionTime"
-                            value={seconds}
-                            onChange={(e) => setSeconds(e.target.value)}
+                            value={minutes}
+                            onChange={(e) => setMinutes(e.target.value)}
                         />
                         {/* <button type="submit"> Submit</button> */}
                     </form>
