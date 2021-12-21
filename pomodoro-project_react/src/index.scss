@@ -73,7 +73,7 @@ input {
     gap: 0.5rem;
 
     .main-section {
-        display: flex;
+        display: inline-flex;
         text-align: center;
         flex-direction: column;
         width: 30vw;
@@ -81,6 +81,9 @@ input {
         background-color: $main-color;
         border: 0.3rem solid black;
         border-radius: 1rem;
+        .remaining-time {
+            font-size: 5rem;
+        }
     }
 
     .main-section:hover {
@@ -127,8 +130,11 @@ input {
     .task-form {
         display: flex;
         flex-direction: column;
+        gap: 0.5rem;
 
-        gap: 1rem;
+        input {
+            width: 20rem;
+        }
 
         input:hover {
             @include hoverglow($input-glow);
@@ -140,7 +146,7 @@ input {
         width: 90%;
         height: 70%;
         padding: 1rem 0;
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         align-items: center;
         overflow-y: auto;
 
@@ -157,13 +163,30 @@ input {
 
             .btn-container {
                 display: flex;
+                gap: 0.1rem;
                 padding: 0.5rem 0;
                 flex-direction: column;
             }
 
             button {
+                height: 1.5rem;
                 width: 4.5rem;
                 outline: 2rem;
+            }
+
+            button:hover {
+                font-size: 0.7rem;
+                font-weight: bold;
+            }
+
+            .done-btn:hover {
+                @include hoverglow(lawngreen);
+            }
+            .edit-btn:hover {
+                @include hoverglow((blueviolet));
+            }
+            .del-btn:hover {
+                @include hoverglow(red);
             }
         }
     }

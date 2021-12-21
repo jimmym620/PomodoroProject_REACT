@@ -146,9 +146,9 @@ const Session = () => {
                     )}
                 </div>
                 <div className="remaining-time">
-                    <h1>
+                    <p>
                         {timerMinutes}:{timerSeconds}
-                    </h1>
+                    </p>
                 </div>
 
                 {!countActive && (
@@ -171,7 +171,7 @@ const Session = () => {
                 )}
 
                 <div className="button-container">
-                    {minutes > 0 && (
+                    {(minutes > 0 || seconds > 0) && (
                         <button className="clearTime" onClick={clearTimer}>
                             Clear timer
                         </button>
@@ -182,7 +182,7 @@ const Session = () => {
                         name="startStopBTN"
                         onClick={startPauseSession}
                     >
-                        {isPaused ? "Start" : "Pause"}
+                        {isPaused ? "Begin" : "Pause"}
                     </button>
                     {isPaused && countActive && (
                         <button className="sessionButtons" onClick={endSession}>
