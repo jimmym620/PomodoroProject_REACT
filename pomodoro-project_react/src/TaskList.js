@@ -73,6 +73,7 @@ const TaskList = () => {
                     className="task-input"
                     placeholder="Study English"
                     value={desc}
+                    maxlength="200"
                     onChange={(e) => setDesc(e.target.value)}
                 />
                 <button type="submit" className="submit-btn">

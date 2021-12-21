@@ -1,3 +1,13 @@
+$main-color: #8987f2;
+$task-item-color: #9db0f0;
+$border-default: 0.1rem solid black;
+$radius-default: 0.25rem;
+
+@mixin default {
+    padding: 0 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
 header {
     display: flex;
     flex-direction: column;
@@ -52,8 +62,8 @@ input {
     text-align: center;
     flex-direction: column;
     width: 30vw;
-    height: 60vh;
-    background-color: rgb(137, 135, 242);
+    height: 65vh;
+    background-color: $main-color;
     outline: 5px solid black;
 }
 
@@ -75,29 +85,38 @@ input {
 }
 
 .TaskSection {
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .task-list {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    justify-content: center;
+    width: 90%;
+    height: 70%;
+    padding: 1rem 0;
+    margin-top: 1rem;
     align-items: center;
+    overflow-y: auto;
 }
 .task-item {
+    @include default;
     display: flex;
-    width: 13rem;
-
-    padding: 0 0.5rem;
-    margin: 0.5rem 0;
-    font-size: 1rem;
+    width: 90%;
+    height: auto;
+    justify-content: space-between;
     align-items: center;
-    border-radius: 0.25rem;
-    border: 0.1rem solid black;
-    background-color: rgb(157, 176, 240);
-}
+    border-radius: $radius-default;
+    outline: $border-default;
+    background-color: $task-item-color;
 
-.task-item button {
-    width: 4rem;
+    .btn-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        width: 4.5rem;
+        outline: 2rem;
+    }
 }

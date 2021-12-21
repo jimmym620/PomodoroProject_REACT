@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import Session from "./Session";
 import TaskList from "./TaskList";
 import SessionHistory from "./SessionHistory";
