@@ -67,18 +67,20 @@ const TaskList = () => {
             <h1>Task List</h1>
 
             <form className="task-form" onSubmit={handleSubmit}>
-                <h4>Add a task</h4>
-                <input
-                    type="text"
-                    className="task-input"
-                    placeholder="Study English"
-                    value={desc}
-                    maxlength="200"
-                    onChange={(e) => setDesc(e.target.value)}
-                />
-                <button type="submit" className="submit-btn">
-                    {isEditing ? "Edit" : "Submit"}
-                </button>
+                <h3>Add a task</h3>
+                <div className="form-div">
+                    <input
+                        type="text"
+                        className="task-input"
+                        placeholder="Study English"
+                        value={desc}
+                        maxlength="200"
+                        onChange={(e) => setDesc(e.target.value)}
+                    />
+                    <button type="submit" className="submit-btn">
+                        {isEditing ? "Edit" : "Submit"}
+                    </button>
+                </div>
             </form>
             {list.length > 0 && (
                 <Tasks

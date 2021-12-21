@@ -5,10 +5,28 @@ import React, { Component } from "react";
 import { useState, useEffect } from "react";
 import Message from "./Message";
 
+const getLocalStorageMinutes = () => {
+    let minutes = localStorage.getItem("pomodoro-minutes");
+    if (minutes) {
+        return JSON.parse(localStorage.getItem("pomodoro-minutes"));
+    } else {
+        return [];
+    }
+};
+
+const getLocalStorageSeconds = () => {
+    let seconds = localStorage.getItem("pomodoro-seconds");
+    if (seconds) {
+        return JSON.parse(localStorage.getItem("pomodoro-seconds"));
+    } else {
+        return [];
+    }
+};
+
 const Session = () => {
     const [isPaused, setIsPaused] = useState(true);
-    const [isEnded, setIsEnded] = useState(false);
     const [countActive, setCountActive] = useState(false);
+    const [stop, setStop] = useState(false);
 
     const [displayBreakMessage, setDisplayBreakMessage] = useState({
         show: true,
@@ -16,8 +34,8 @@ const Session = () => {
         type: "",
         displayTime: 0,
     });
-    const [minutes, setMinutes] = useState(5);
-    const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState(getLocalStorageMinutes);
+    const [seconds, setSeconds] = useState(getLocalStorageSeconds);
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -25,8 +43,18 @@ const Session = () => {
     useEffect(() => {
         let interval = setInterval(() => {
             clearInterval(interval);
+            if (stop) {
+                clearInterval(interval);
+                setMinutes(0);
+                setSeconds(0);
+                localStorage.setItem("pomodoro-minutes", 0);
+                localStorage.setItem("pomodoro-seconds", 0);
+                setStop(false);
+                return;
+            }
+
             // if seconds are 0
-            if (seconds === 0) {
+            else if (seconds === 0) {
                 // if minutes are not 0
                 if (minutes !== 0 && !isPaused) {
                     //decrease minutes by one, set seconds from 0 to 59
@@ -51,24 +79,33 @@ const Session = () => {
                 return;
             }
             // if timer is paused
-            else if (isPaused && countActive) {
+            if (isPaused && countActive) {
                 console.log("PAUSED");
                 return;
             }
             // if seconds are not 0, just decrease seconds by 1
-            if (!isPaused && seconds !== 0 && countActive) {
+            else if (!isPaused && seconds !== 0 && countActive) {
                 setSeconds(seconds - 1);
 
                 console.log(seconds + " isPaused: " + isPaused);
             }
         }, 1000);
-    }, [seconds, isPaused, countActive]);
+    }, [seconds, isPaused, countActive, stop]);
+
+    useEffect(() => {
+        localStorage.setItem("pomodoro-minutes", JSON.stringify(minutes));
+        localStorage.setItem("pomodoro-seconds", JSON.stringify(seconds));
+    }, [minutes, seconds]);
 
     const endSession = () => {
         setMinutes(0);
         setSeconds(0);
         setIsPaused(true);
         setCountActive(false);
+    };
+
+    const clearTimer = () => {
+        setStop(true);
     };
 
     const startPauseSession = () => {
@@ -97,7 +134,7 @@ const Session = () => {
 
     return (
         <section className="main-section">
-            <div className=" session">
+            <div className="session">
                 <h1>Start a session</h1>
                 <div className="message-display">
                     {displayBreakMessage.show && (
@@ -121,9 +158,10 @@ const Session = () => {
                             type="number"
                             max="60"
                             min="1"
-                            onInput={(e) =>
-                                (e.target.value = e.target.value.slice(0, 2))
-                            }
+                            placeholder="0"
+                            onInput={(e) => {
+                                e.target.value = e.target.value.slice(0, 2);
+                            }}
                             name="sessionTime"
                             value={minutes}
                             onChange={(e) => setMinutes(e.target.value)}
@@ -133,6 +171,12 @@ const Session = () => {
                 )}
 
                 <div className="button-container">
+                    {minutes > 0 && (
+                        <button className="clearTime" onClick={clearTimer}>
+                            Clear timer
+                        </button>
+                    )}
+
                     <button
                         className="sessionButtons"
                         name="startStopBTN"
