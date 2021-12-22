@@ -12,7 +12,7 @@ const getLocalStorage = () => {
     }
 };
 
-const TaskList = () => {
+const TaskList = ({ sendTasks }) => {
     const [desc, setDesc] = useState("");
     const [list, setList] = useState(getLocalStorage());
     const [isEditing, setIsEditing] = useState(false);
@@ -59,8 +59,9 @@ const TaskList = () => {
     };
 
     useEffect(() => {
+        sendTasks(list);
         localStorage.setItem("pomodoro-task-list", JSON.stringify(list));
-    }, [list]);
+    }, [list, sendTasks]);
 
     return (
         <section className="TaskSection main-section">
@@ -74,7 +75,7 @@ const TaskList = () => {
                         className="task-input"
                         placeholder="Study English"
                         value={desc}
-                        maxlength="200"
+                        maxLength="200"
                         onChange={(e) => setDesc(e.target.value)}
                     />
                     <button type="submit" className="submit-btn">

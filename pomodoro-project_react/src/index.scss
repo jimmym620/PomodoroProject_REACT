@@ -85,9 +85,6 @@ input {
         border: 0.2rem solid black;
         border-radius: 1rem;
         color: #95b1f0;
-        .remaining-time {
-            font-size: 5rem;
-        }
     }
 
     .main-section:hover {
@@ -101,8 +98,12 @@ input {
     justify-content: space-around;
     align-self: center;
     justify-self: center;
-    width: 80%;
-    height: 100%;
+
+    .remaining-time {
+        p {
+            font-size: 3rem;
+        }
+    }
 
     .time-form {
         display: flex;
@@ -123,7 +124,7 @@ input {
         display: flex;
         flex-direction: column;
         align-self: center;
-        width: 100%;
+        width: 70%;
     }
 }
 
@@ -137,7 +138,7 @@ input {
         gap: 0.5rem;
 
         input {
-            width: 20rem;
+            width: 80%;
         }
 
         input:hover {
