@@ -1,5 +1,6 @@
-$main-color: #8987f2;
-$task-item-color: #9db0f0;
+$bg-color: #544c76;
+$main-color: #717191;
+$task-item-color: #6b7699;
 $border-default: 0.1rem solid black;
 $radius-default: 0.25rem;
 $input-glow: rgb(255, 226, 3);
@@ -22,9 +23,9 @@ $input-glow: rgb(255, 226, 3);
 header {
     display: flex;
     flex-direction: column;
-    color: rgb(208, 35, 35);
+    color: rgb(213, 70, 70);
     align-items: center;
-
+    -webkit-text-stroke: 0.05rem black;
     justify-content: center;
 }
 body {
@@ -36,6 +37,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 
     font-family: "Roboto Mono", monospace;
+    background-color: $bg-color;
 }
 
 code {
@@ -65,7 +67,8 @@ input {
     justify-content: center;
     align-items: center;
     // margin: 1rem 0;
-    border: 0.2rem solid black;
+    color: white;
+    border: 0.2rem solid white;
 }
 
 .main-container {
@@ -79,8 +82,9 @@ input {
         width: 30vw;
         height: 65vh;
         background-color: $main-color;
-        border: 0.3rem solid black;
+        border: 0.2rem solid black;
         border-radius: 1rem;
+        color: #95b1f0;
         .remaining-time {
             font-size: 5rem;
         }
@@ -164,6 +168,7 @@ input {
             border-radius: $radius-default;
             outline: $border-default;
             background-color: $task-item-color;
+            color: #ded9f3;
 
             .btn-container {
                 display: flex;
