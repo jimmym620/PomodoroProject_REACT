@@ -150,6 +150,10 @@ input {
         align-items: center;
         overflow-y: auto;
 
+        .task-item:hover {
+            width: 88%;
+        }
+
         .task-item {
             @include item;
             display: flex;
