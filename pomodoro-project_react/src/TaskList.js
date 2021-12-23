@@ -12,7 +12,7 @@ const getLocalStorage = () => {
     }
 };
 
-const TaskList = ({ sendTasks }) => {
+const TaskList = () => {
     const [desc, setDesc] = useState("");
     const [list, setList] = useState(getLocalStorage());
     const [isEditing, setIsEditing] = useState(false);
@@ -59,9 +59,9 @@ const TaskList = ({ sendTasks }) => {
     };
 
     useEffect(() => {
-        sendTasks(list);
         localStorage.setItem("pomodoro-task-list", JSON.stringify(list));
-    }, [list, sendTasks]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [list]);
 
     return (
         <section className="TaskSection main-section">
