@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Countdown template from https://aleksandarpopovic.com/Infinite-Pomodoro-App-in-React/
 
-import React, { Component } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import Message from "./Message";
 

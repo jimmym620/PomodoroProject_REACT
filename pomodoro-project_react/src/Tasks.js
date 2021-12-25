@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 const Tasks = ({ items, removeItem, editItem, completeItem }) => {
     return (

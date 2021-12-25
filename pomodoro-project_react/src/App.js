@@ -6,7 +6,8 @@ import CurrentTime from "./CurrentTime";
 import { useState } from "react";
 
 function App() {
-    const [tasks, setTasks] = useState([]);
+    // true if item has been completed
+    const [completion, setCompletion] = useState(false);
 
     return (
         // Header
@@ -20,8 +21,8 @@ function App() {
                 <CurrentTime />
                 <div className="main-container">
                     <Session />
-                    <TaskList />
-                    <SessionHistory tasks={tasks} />
+                    <TaskList setCompletion={setCompletion}/>
+                    <SessionHistory completion={completion} setCompletion={setCompletion} />
                 </div>
             </main>
         </>

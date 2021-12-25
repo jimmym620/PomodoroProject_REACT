@@ -1,6 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Tasks from "./Tasks.js";
 
 const getLocalStorage = () => {
@@ -12,7 +11,7 @@ const getLocalStorage = () => {
     }
 };
 
-const TaskList = () => {
+const TaskList = ({ setCompletion }) => {
     const [desc, setDesc] = useState("");
     const [list, setList] = useState(getLocalStorage());
     const [isEditing, setIsEditing] = useState(false);
@@ -40,10 +39,18 @@ const TaskList = () => {
             const newTask = {
                 id: new Date().getTime().toString(),
                 title: desc,
+                status: "current",
             };
             setList([...list, newTask]);
             setDesc("");
         }
+    };
+
+    const completeItem = (id) => {
+        const specificTask = list.find((item) => item.id === id);
+        specificTask.status = "complete";
+        localStorage.setItem("pomodoro-task-list", JSON.stringify(list));
+        setCompletion(true);
     };
 
     const removeItem = (id) => {
@@ -88,6 +95,7 @@ const TaskList = () => {
                     items={list}
                     removeItem={removeItem}
                     editItem={editItem}
+                    completeItem={completeItem}
                 />
             )}
 

@@ -1,0 +1,20 @@
+import React from "react";
+
+const historyTask = ({ storageList }) => {
+    return (
+        <p>testing</p>
+        // <div className="histTasks">
+        //     test
+        //     {storageList.map((item) => {
+        //         const { id, title } = item;
+        //         return (
+        //             <article key={id} className="histTask-item">
+        //                 <p> {title}</p>
+        //             </article>
+        //         );
+        //     })}
+        // </div>
+    );
+};
+
+export default historyTask;
