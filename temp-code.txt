@@ -3,6 +3,16 @@ import { useState, useEffect } from "react";
 import historyTask from "./historyTask,js";
 import Tasks from "./Tasks";
 
+const getLocalStorage = () => {
+    let list = localStorage.getItem("pomodoro-task-list");
+    if (list) {
+        // console.log(JSON.parse(localStorage.getItem("pomodoro-task-list")));
+        return JSON.parse(localStorage.getItem("pomodoro-task-list"));
+    } else {
+        return [];
+    }
+};
+
 const getLocalHistStorage = () => {
     let list = localStorage.getItem("pomodoro-history");
     if (list) {
@@ -12,45 +22,46 @@ const getLocalHistStorage = () => {
     }
 };
 
-// =====================================================================================
+const SessionHistory = ({ completion, setCompletion }) => {
+    // copy the incoming array and use the copy
+    const [taskStorageList, setTaskStorageList] = useState(getLocalStorage());
+    const [histStorageList, setHistStorageList] = useState(
+        getLocalHistStorage()
+    );
 
-const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
-    const [histStorage, setHistStorage] = useState(getLocalHistStorage());
-
-    // console.log(getLocalStorage()[0]);
-
-    // console.log(histStorage[0].id);
-    // if (histStorage.some((item) => item.id !== value.id)) {
-    //     alert("item doesnt exists");
-    // }
-    const testFunc = () => {
-        for (const [key, value] of Object.entries(getLocalStorage())) {
-            if (value.status === "complete") {
-                if (histStorage.keys.length === 0) {
-                    setHistStorage([value]);
-                } else if (!histStorage.some((item) => item.id === value.id)) {
-                    setHistStorage([...histStorage, value]);
-                }
-            }
-            localStorage.setItem(
-                "pomodoro-history",
-                JSON.stringify(histStorage)
-            );
-        }
-    };
     useEffect(() => {
-        testFunc();
-        // getLocalStorage();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [completion, histStorage]);
+        setTaskStorageList(getLocalStorage);
+        setHistStorageList(getLocalHistStorage);
+    
+    }, [completion]);
 
+    const loopLocalStorage = () => {
+        console.log(taskStorageList);
+        taskStorageList.forEach((item) => {
+            const { status } = item;
+            if (status === "complete") {
+                console.log("yo");
+                setCompletion(false);
+                checkForDuplicates(item);
+            }
+        });
+    };
+
+    const checkForDuplicates = (item) => {
+        // if (!histStorageList.includes(item.id)) {
+        setHistStorageList([...histStorageList, item]);
+        localStorage.setItem(
+            "pomodoro-history",
+            JSON.stringify(histStorageList)
+        );
+        // }
+    };
     return (
         <section className="SessionHistory main-section">
             <h1>Session history component</h1>
 
             <section>
                 <div className="histTasks">
-                    <button onClick={testFunc}>GET</button>
                     {/* {histStorageList.map((item) => {
                         const { id, title, status } = item;
                         if (status === "complete") {

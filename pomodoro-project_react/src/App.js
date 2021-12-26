@@ -6,6 +6,15 @@ import CurrentTime from "./CurrentTime";
 import { useState } from "react";
 
 function App() {
+    const getLocalStorage = () => {
+        let list = localStorage.getItem("pomodoro-task-list");
+        if (list) {
+            // console.log(JSON.parse(localStorage.getItem("pomodoro-task-list")));
+            return JSON.parse(localStorage.getItem("pomodoro-task-list"));
+        } else {
+            return [];
+        }
+    };
     // true if item has been completed
     const [completion, setCompletion] = useState(false);
 
@@ -21,8 +30,12 @@ function App() {
                 <CurrentTime />
                 <div className="main-container">
                     <Session />
-                    <TaskList setCompletion={setCompletion}/>
-                    <SessionHistory completion={completion} setCompletion={setCompletion} />
+                    <TaskList setCompletion={setCompletion} />
+                    <SessionHistory
+                        completion={completion}
+                        setCompletion={setCompletion}
+                        getLocalStorage={getLocalStorage}
+                    />
                 </div>
             </main>
         </>

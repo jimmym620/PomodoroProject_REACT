@@ -14,14 +14,14 @@ else
  - minutes and seconds === 0
  - isPaused FALSE
 
- ===============================
+===============================
  How to know if a session began and has isEnded
 
  - minutes > 0, sessionActive TRUE
  - if (sessionActive TRUE, minutes+seconds = 0), 
     sessionActive FALSE
 
- ===============================
+===============================
 How to make copy of tasks list for session history
 
 Task list
@@ -32,9 +32,10 @@ Session history (IF COMPLETE BUTTON IS PRESSED)
 #1 task1, task 2
 #2 task1, task2
 
-(3) [{…}, {…}, {…}]
-0: {id: '1640259733062', title: 'yo'}
-1: {id: '1640260016059', title: 'task1'}
-2: {id: '1640260725698', title: 'bigner'}
-length: 3
-[[Prototype]]: Array(0)
+===============================
+ How to loop through histStorageList and taskStorageList
+
+ #1 go through taskStorageList and check for status: "complete"
+        if true, add it to histStorageList
+
+#2 map through histStorageListand create new articles
