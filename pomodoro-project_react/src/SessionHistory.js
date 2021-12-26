@@ -23,15 +23,14 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
     // if (histStorage.some((item) => item.id !== value.id)) {
     //     alert("item doesnt exists");
     // }
-    const testFunc = () => {
+    const saveHistory = () => {
         for (const [key, value] of Object.entries(getLocalStorage())) {
             if (value.status === "complete") {
-                if (histStorage.keys.length === 0) {
-                    setHistStorage([value]);
-                } else if (!histStorage.some((item) => item.id === value.id)) {
+                if (!histStorage.some((item) => item.id === value.id)) {
                     setHistStorage([...histStorage, value]);
                 }
             }
+            setCompletion(false);
             localStorage.setItem(
                 "pomodoro-history",
                 JSON.stringify(histStorage)
@@ -39,8 +38,8 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
         }
     };
     useEffect(() => {
-        testFunc();
-        // getLocalStorage();
+        saveHistory();
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [completion, histStorage]);
 
@@ -49,25 +48,17 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
             <h1>Session history component</h1>
 
             <section>
-                <div className="histTasks">
-                    <button onClick={testFunc}>GET</button>
-                    {/* {histStorageList.map((item) => {
+                {/* <div className="histTasks">
+                    {histStorage.map((item) => {
                         const { id, title, status } = item;
-                        if (status === "complete") {
-                            setCompletion(false);
-                            loopLocalStorage();
 
-                            return (
-                                <article key={id} className="histTask-item">
-                                    <p>
-                                        {title}
-                                        {status}
-                                    </p>
-                                </article>
-                            );
-                        } else return null;
-                    })} */}
-                </div>
+                        return (
+                            <article key={id} className="histTask-item">
+                                <p>{title}</p>
+                            </article>
+                        );
+                    })}
+                </div> */}
             </section>
         </section>
     );
