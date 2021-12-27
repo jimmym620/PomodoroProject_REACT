@@ -1,7 +1,6 @@
 import React from "react";
+import HistoryTask from "./HistoryTask";
 import { useState, useEffect } from "react";
-
-import historyTask from "./historyTasks";
 
 const getLocalHistStorage = () => {
     let list = localStorage.getItem("pomodoro-history");
@@ -47,12 +46,8 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
         <section className="SessionHistory main-section">
             <h1>Session history component</h1>
 
-            <section>
-                <div className="histTasks">
-                    {histStorage.length}
-                    {histStorage.length > 0 && <historyTasks />}
-                </div>
-            </section>
+            <HistoryTask histStorage={histStorage} />
+            <div className="histTasks">{histStorage.length}</div>
         </section>
     );
 };

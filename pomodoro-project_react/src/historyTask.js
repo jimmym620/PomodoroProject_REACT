@@ -1,6 +1,6 @@
 import React from "react";
 
-const historyTask = ({ histStorage }) => {
+const HistoryTask = ({ histStorage }) => {
     return (
         <div className="history-task-list">
             {histStorage.map((task) => {
@@ -16,4 +16,4 @@ const historyTask = ({ histStorage }) => {
     );
 };
 
-export default historyTask;
+export default HistoryTask;
