@@ -72,7 +72,7 @@ const TaskList = ({ setCompletion }) => {
 
     return (
         <section className="TaskSection main-section">
-            <h1>Task List</h1>
+            <h1>Your Tasks</h1>
 
             <form className="task-form" onSubmit={handleSubmit}>
                 <h3>Add a task</h3>

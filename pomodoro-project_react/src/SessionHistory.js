@@ -44,10 +44,13 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
 
     return (
         <section className="SessionHistory main-section">
-            <h1>Session history component</h1>
+            <h1>Your previous sessions</h1>
 
-            <HistoryTask histStorage={histStorage} />
-            <div className="histTasks">{histStorage.length}</div>
+            <div className="histTasks">
+                {histStorage.length > 0 && (
+                    <HistoryTask histStorage={histStorage} />
+                )}
+            </div>
         </section>
     );
 };

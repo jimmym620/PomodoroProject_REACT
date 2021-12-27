@@ -201,3 +201,33 @@ input {
         }
     }
 }
+
+.SessionHistory {
+    .histTasks {
+        display: flex;
+        justify-content: center;
+        .history-task-list {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 75%;
+            padding: 1rem 0;
+            margin-top: 0.5rem;
+            align-items: center;
+
+            overflow-y: auto;
+            .history-item {
+                @include item;
+                display: flex;
+                width: 90%;
+                height: auto;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: $radius-default;
+                outline: $border-default;
+                background-color: $task-item-color;
+                color: #ded9f3;
+            }
+        }
+    }
+}

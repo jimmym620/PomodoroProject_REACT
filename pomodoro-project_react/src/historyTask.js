@@ -7,8 +7,10 @@ const HistoryTask = ({ histStorage }) => {
                 const { id, title, status } = task;
                 return (
                     <article key={id} className="history-item">
-                        <p>{status}</p>
                         <p className="hist-task-title">{title}</p>
+                        <div className="btn-container">
+                            <button>Remove</button>
+                        </div>
                     </article>
                 );
             })}
