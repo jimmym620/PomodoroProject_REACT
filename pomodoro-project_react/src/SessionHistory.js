@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import historyTask from "./historyTask,js";
-import Tasks from "./Tasks";
+
+import historyTask from "./historyTasks";
 
 const getLocalHistStorage = () => {
     let list = localStorage.getItem("pomodoro-history");
@@ -24,7 +24,7 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
     //     alert("item doesnt exists");
     // }
     const saveHistory = () => {
-        for (const [key, value] of Object.entries(getLocalStorage())) {
+        for (const [, value] of Object.entries(getLocalStorage())) {
             if (value.status === "complete") {
                 if (!histStorage.some((item) => item.id === value.id)) {
                     setHistStorage([...histStorage, value]);
@@ -48,17 +48,10 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
             <h1>Session history component</h1>
 
             <section>
-                {/* <div className="histTasks">
-                    {histStorage.map((item) => {
-                        const { id, title, status } = item;
-
-                        return (
-                            <article key={id} className="histTask-item">
-                                <p>{title}</p>
-                            </article>
-                        );
-                    })}
-                </div> */}
+                <div className="histTasks">
+                    {histStorage.length}
+                    {histStorage.length > 0 && <historyTasks />}
+                </div>
             </section>
         </section>
     );
