@@ -98,38 +98,6 @@ const TaskList = ({ setCompletion }) => {
                     completeItem={completeItem}
                 />
             )}
-
-            {/* <DragDropContext>
-                <Droppable droppableId="tasks">
-                    {(provided) => (
-                        <ul
-                            className="TaskList"
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                        >
-                            {Tasks.map(({ id, name }, index) => {
-                                return (
-                                    <Draggable
-                                        key={id}
-                                        draggableId={id}
-                                        index={index}
-                                    >
-                                        {(provided) => (
-                                            <li
-                                                innerRef={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                <p>{name}</p>
-                                            </li>
-                                        )}
-                                    </Draggable>
-                                );
-                            })}
-                        </ul>
-                    )}
-                </Droppable>
-            </DragDropContext> */}
         </section>
     );
 };

@@ -37,10 +37,23 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
         }
     };
     useEffect(() => {
-        saveHistory();
+        if (completion) {
+            saveHistory();
+        }
+        // saveHistory();
+        localStorage.setItem("pomodoro-history", JSON.stringify(histStorage));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [completion, histStorage]);
+
+    const removeHTask = (id) => {
+        // delete histStorage[id];
+
+        setHistStorage(histStorage.filter((item) => item.id !== id));
+        // let localTasks = JSON.parse(localStorage.getItem("pomodoro-history"));
+        // localTasks.filter((item) => item.id !== id);
+        // localStorage.setItem("pomodoro-task-list", JSON.stringify(localTasks));
+    };
 
     return (
         <section className="SessionHistory main-section">
@@ -48,7 +61,10 @@ const SessionHistory = ({ completion, setCompletion, getLocalStorage }) => {
 
             <div className="histTasks">
                 {histStorage.length > 0 && (
-                    <HistoryTask histStorage={histStorage} />
+                    <HistoryTask
+                        histStorage={histStorage}
+                        removeHTask={removeHTask}
+                    />
                 )}
             </div>
         </section>

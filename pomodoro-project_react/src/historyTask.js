@@ -1,6 +1,6 @@
 import React from "react";
 
-const HistoryTask = ({ histStorage }) => {
+const HistoryTask = ({ histStorage, removeHTask }) => {
     return (
         <div className="history-task-list">
             {histStorage.map((task) => {
@@ -9,7 +9,9 @@ const HistoryTask = ({ histStorage }) => {
                     <article key={id} className="history-item">
                         <p className="hist-task-title">{title}</p>
                         <div className="btn-container">
-                            <button>Remove</button>
+                            <button onClick={() => removeHTask(id)}>
+                                Remove
+                            </button>
                         </div>
                     </article>
                 );

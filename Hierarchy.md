@@ -5,3 +5,4 @@ App
     TaskList
         Task
     SessionHistory
+        HistoryTask
